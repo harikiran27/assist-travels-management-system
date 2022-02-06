@@ -1,0 +1,32 @@
+{
+  "id": "dd7d7b14-89ec-457b-b2df-8e7d4b0c78d1",
+  "version": "2.0",
+  "name": "signIn",
+  "url": "",
+  "tests": [{
+    "id": "a5acb837-1ceb-4afe-b814-0c038edb86f4",
+    "name": "Untitled",
+    "commands": []
+  }, {
+    "id": "f135aa53-458e-4c8e-a32d-9352056e2929",
+    "name": "invalid-email",
+    "commands": [{
+      "id": "d6e7a472-15c6-455c-b395-a7b0eae82c34",
+      "comment": "",
+      "command": "assertText",
+      "target": "//*[@id=\"error-label\"]",
+      "targets": [],
+      "value": "ENTER A VALID EMAIL ADDRESS!"
+    }]
+  }],
+  "suites": [{
+    "id": "c14d2d20-26eb-40f3-95ff-6746df9d5308",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["a5acb837-1ceb-4afe-b814-0c038edb86f4"]
+  }],
+  "urls": [],
+  "plugins": []
+}

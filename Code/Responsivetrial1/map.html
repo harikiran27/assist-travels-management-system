@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Place the geocoder input outside the map</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+
+</style>
+</head>
+<body>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css">
+ 
+<style>
+
+.geocoder {
+position: absolute;
+width: 50%;
+top: 10px;
+}
+
+#destGeocoder{
+position: absolute;
+width: 50%;
+left:50%;
+top: 10px;
+}
+.mapboxgl-ctrl-geocoder {
+min-width: 50%;
+}
+#map {
+margin-top: 75px;
+height: 50%;
+width: 50%;
+}
+</style>
+ 
+<div id="map"></div>
+ 
+<div id="geocoder" class="geocoder"></div>
+<div id="destGeocoder" class="geocoder"></div>
+ 
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoiaGFyaWtpcmFuMjciLCJhIjoiY2t5Y3owbGtsMHUycDJ3bzgzNDdlNXU5OSJ9.I4bFvoEA8s8I2A17V9Z2wg';
+const map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [-79.4512, 43.6568],
+zoom: 13
+});
+ 
+// Add the control to the map.
+
+const geocoder = new MapboxGeocoder({
+accessToken: mapboxgl.accessToken,
+mapboxgl: mapboxgl
+});
+const destGeocoder = new MapboxGeocoder({
+accessToken: mapboxgl.accessToken,
+marker: {
+color: 'red'
+},
+mapboxgl: mapboxgl
+});
+
+
+geocoder.on('result', function(result) {
+   console.log(result);
+})
+
+destGeocoder.on('result', function(result) {
+   console.log(result);
+})
+
+ 
+document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+document.getElementById('destGeocoder').appendChild(destGeocoder.onAdd(map));
+</script>
+ 
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>DriverPage</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style3.css" rel="stylesheet">
+
+    <!-- Firebase-->
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-firestore.js"></script>
+
+    <!--Mapbox-->
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        #phoneNumber {
+            margin-bottom: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!--
+    <div>
+        <div class="card" style="width: max-content; text-align: center; padding-left: 10%; padding-right: 10%;">
+            <div class="card-body" id="login-container">
+
+                <section>
+                    <div>
+                        <input type="tel" id="phoneNumber" placeholder="Enter your phone number">
+                    </div>
+                    <button type="button" class="btn btn-primary" id="sign-in-button" onclick="submitPhoneNumberAuth()">
+                        SIGN IN WITH PHONE
+                    </button>
+                    <div id="recaptcha-container"></div>
+                </section>
+                <div id="enter-otp" style="display: none;">
+                    <input type="text" id="code" placeholder="Enter OTP">
+                    <button type="button" class="btn btn-primary" id="confirm-code"
+                        onclick="submitPhoneNumberAuthCode()">
+                        ENTER CODE
+                    </button>
+                </div>
+            </div>
+        </div>
+    -->
+
+    <div class="login-wrap">
+
+        <div class=" login-html">
+            <header id="header">
+                <h1 class="logo me-auto me-lg-0">ASSIST<span>.</span></h1>
+                </header>
+            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign
+                In</label>
+            <input id="tab-2" type="radio" name="tab" class="sign-up" disabled="true"><label for="tab-2" id="SUtab" class="tab">Booking
+                Details</label>
+            <div class="login-form">
+                <div class="sign-in-htm" id="login-container">
+
+                    <div class="form-group group">
+                        <label for="phn" class="label">Phone Number</label>
+                        <input id="phoneNumber" type="tel" class="input">
+                    </div>
+
+                    <div class="group">
+                        <div id="recaptcha-container" style="position: relative;"></div>
+                    </div>
+
+
+                    <div class="group">
+                        <input type="submit" id="sign-in-button" class="btn button" onclick="submitPhoneNumberAuth()" value="Sign In">
+                    </div>
+                    <div class="group">
+                        <label class="label" id="error-label1"></label>
+                    </div>
+
+                    <div class="hr"></div>
+                    
+                    <div id="enter-otp" style="display: none;">
+                        <div class="form-group group">
+                            <label class="label">Enter OTP</label>
+                            <input id="code" type="number" class="input">
+                        </div>
+                        <div class="group">
+                            <input type="submit" id="confirm-code" class="btn button" onclick="submitPhoneNumberAuthCode()" value="ENTER CODE" style="margin-top:10px!important;">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="sign-up-htm">
+
+                    <!--<input type="password" placeholder="password here" id="password"><br>-->
+
+                    <div class="form-group group">
+                        <label class="label" id="signin-label">Please sign in to access your assigned ride details!</label>
+                    </div>
+
+                    <div class="form-group group">
+                        <div id="data-container" style="display: none;color: black;">
+                            <ul>
+                                <li>Booking ID : <span><label id="booking_id"></label></span></li>
+                                <li>Customer Name : <span><label id="cust_name"></label></span></li>
+                                <li>Customer Phone Number : <span><label id="cust_phn"></label></span></li>
+                                <li>Booking Date : <span><label id="date1"></label></span></li>
+                                <li>Reporting Time : <span><label id="time"></label></span></li>
+                                <li>Number of People : <span><label id="numOfPpl"></label></span></li>
+                                <li>Number of Days : <span><label id="days"></label></span></li>
+                                <li>Vehicle ID : <span><label id="vehicleID"></label></span></li>
+                                <li>Vehicle : <span><label id="vehicleName"></label></span></li>
+                                <li>Start Location : <span><label id="startLocLabel"></label></span></li>
+                                <li>Destination Location : <span><label id="destLocLabel"></label></span></li>
+
+                            </ul>
+                            <div class="group">
+                                <a href="routeMap.html"><button type="submit" class="btn button"
+                                        onclick="rideComplete()">Start Ride</button></a>
+                            </div>
+                            <div class="hr"></div>
+                            <div class="group">
+                                <input type="submit" id="signout-button" class="btn button" onclick="signOut()" value="Sign Out">
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                    
+                </div>
+
+                <!--
+                <div id="data-container" style="display: none;">
+                    <div class="row">
+                        <div class="col-lg-5"></div>
+
+                        <div class="col-lg-3">
+                            <div>
+                                <h4>Enter your DriverID : </h4>
+                                <input type="text" id="driverID">
+                                <button type="button" class="btn btn-primary" onclick="IDsubmit()">Submit</button>
+                            </div>
+                            <div style="color: black;">
+                                <p>Booking Details</p>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Booking ID : <span><label id="booking_id"></label></span></li>
+                                    <li>Customer Name : <span><label id="cust_name"></label></span></li>
+                                    <li>Customer Phone Number : <span><label id="cust_phn"></label></span></li>
+                                    <li>Booking Date : <span><label id="date1"></label></span></li>
+                                    <li>Reporting Time : <span><label id="time"></label></span></li>
+                                    <li>Number of People : <span><label id="numOfPpl"></label></span></li>
+                                    <li>Number of Days : <span><label id="days"></label></span></li>
+                                    <li>Vehicle ID : <span><label id="vehicleID"></label></span></li>
+                                    <li>Vehicle : <span><label id="vehicleName"></label></span></li>
+                                    <li>Start Location : <span><label id="startLocLabel"></label></span></li>
+                                    <li>Destination Location : <span><label id="destLocLabel"></label></span></li>
+
+                                </ul>
+                            </div>
+
+                            <div>
+                                <a href="routeMap.html"><button type="button" class="btn btn-primary"
+                                        onclick="rideComplete()">Start Ride</button></a>
+                            </div>
+
+
+
+                        </div>
+                        <div class="col-lg-4"></div>
+                    </div>
+                </div>
+            -->
+            </div>
+            <script src="assets/js/driver.js"></script>
+</body>

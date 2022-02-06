@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Assist - Index</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style1.css" rel="stylesheet">
+
+  <!-- Firebase-->
+
+  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-firestore.js"></script>
+
+  <!-- Chart-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+  <!-- Mapbox-->
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+
+
+
+</head>
+
+<body>
+
+  <!--Geocoder-->
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js">
+  </script>
+  <link rel="stylesheet"
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css">
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center justify-content-lg-between">
+
+      <h1 class="logo me-auto me-lg-0"><a href="index.html">ASSIST<span>.</span></a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="#bookaride">Book a Ride</a></li>
+          <li><a class="nav-link scrollto" href="#vehicles">Vehicles</a></li>
+          <li><a class="nav-link scrollto " href="#drivers">Drivers</a></li>
+          <li><a class="nav-link scrollto " href="#stats">Statistics</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+      <a onclick="signOut()" class="get-started-btn scrollto">SIGN OUT</a>
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center justify-content-center">
+    <div class="container" data-aos="fade-up">
+
+      <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
+        <div class="col-xl-6 col-lg-8">
+          <h1>Let's get started<span>.</span></h1>
+
+        </div>
+      </div>
+      
+      <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
+        <div class="col-xl-2 col-md-4">
+          <div class="icon-box">
+            <i class="ri-calendar-todo-line"></i>
+            <h3><a href="#bookaride" onclick="clickBookRide()">Book a Ride</a></h3>
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+          <div class="icon-box">
+            <i class="ri-car-line"></i>
+            <h3><a href="#vehicles">Vehicles</a></h3>
+          </div>
+        </div>
+        
+        
+        <div class="col-xl-2 col-md-4">
+          <div class="icon-box">
+            <i class="ri-account-pin-circle-line"></i>
+            <h3><a href="#drivers">Drivers</a></h3>
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+          <div class="icon-box">
+            <i class="ri-bar-chart-box-line"></i>
+            <h3><a href="#stats">Statistics</a></h3>
+          </div>
+        </div>
+      </div>
+      
+
+    </div>
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= Booking Section ======= -->
+    <section id="bookaride" class="about">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+
+          <p>Book a Ride</p>
+        </div>
+        <div class="row">
+          <div class="col-lg-8 mt-5 mt-lg-0">
+            <div class="row">
+              
+              <div class="col-md-6 form-group">
+                <input type="text" name="name" class="form-control br-input" id="name" placeholder="Customer Name" required>
+              </div>
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                <input type="number" name="phn" class="form-control br-input" id="phn"
+                  placeholder="Customer Phone Number" required>
+                <span><label id="phnerror" style="display: none;">Please enter a 10-digit number</label></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <input type="date" name="date" id="date"  placeholder="Date">
+              </div>
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                <input type="number" name="days" class="form-control br-input" id="days" placeholder="Number of Days" required>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <select class="form-control br-input" id="vehicleType">
+                  <option selected>Select Vehicle Type...</option>
+                  <option value="Luxury">Luxury</option>
+                  <option value="Sedan">Sedan</option>
+                  <option value="Mini Bus">Mini Bus</option>
+                </select>
+              </div>
+              <!--<div class="">
+                <input type="text" name="vehicleType" class="form-control" id="vehicleType" placeholder="Type of Vehicle" required>
+              </div>-->
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                <input type="time" name="time" class="form-control br-input" id="time" placeholder="Reporting Time" required>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <input type="number" name="numOfPpl" class="form-control br-input" id="numOfPpl" placeholder="Number of People"
+                  required>
+              </div>
+              <div class="col-md-6 form-group mt-3 mt-md-0">
+                <select class="form-control br-input" id="tripType">
+                  <option selected>Select Trip Type...</option>
+                  <option value="drop">Pick Up and Drop</option>
+                  <option value="round">Round Trip</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <div class="geocoder" id="geocoder"></div>
+              </div>
+              <div class="col-md-6 form-group mt-3 mt-md-0 ">
+                <div class="geocoder" id="destGeocoder"></div>
+              </div>
+            </div>
+            <div class="text-center" style="margin-bottom: 10px;height: 20px;"><label class="label" id="error-label" style="color:red;display: none;">...</label></div>
+            <div class="text-center"><button id="submit_ride_button" type="submit" onclick="booking_submit()">Submit</button></div>
+
+          </div>
+          <div class="col-lg-4">
+            <div id="map"></div>
+          </div>
+        </div>
+     
+        <div class="card text-center" id="collapseExample2" style="display: none;">
+          <div class="card-body" >
+            <div class="section-title">
+              <h2>Assign Ride</h2>
+
+              <h5>Assigned Vehicle : <span><label id="assignedVehicle"></label></span></h5>
+              <h5>Assigned Driver : <span><label id="assignedDriver"></label></span></h5>
+            </div>
+          </div>
+        </div>
+        <label id="loadCheck" style="color: white; display: none;">Ready</label>
+      </section>
+
+    <!-- End Booking Section -->
+
+    <!-- Vehicles Section-->
+    <section id="vehicles" class="about">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <p>Vehicles</p>
+        </div>
+        <div class="row">
+        <div class="col-lg-6 mt-5 mt-lg-0" style="text-align: center;">
+          <a class="addButton" onclick="Collapse()" data-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="collapseExample">
+            Add a vehicle to DB <span><img src="assets/img/plus icon.png" width="40" height="40"></span>
+          </a>
+
+          <div class="collapse card-body" id="collapseExample">
+            <div class="col-lg-12 mt-5 mt-lg-0">
+              <div class="row text-center">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-6 form-group text-center">
+                  <input type="text" name="regNo" class="form-control br-input" id="regNo" placeholder="Vehicle Registration Number"
+                    required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="vehicleMake" class="form-control br-input" id="vehicleMake" placeholder="Vehicle Make"
+                    required>
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                  <input type="text" name="vehicleModel" class="form-control br-input" id="vehicleModel"
+                    placeholder="Vehicle Model" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="vehicleClass" class="form-control br-input" id="vehicleClass"
+                    placeholder="Vehicle Class" required>
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                  <input type="number" name="numOfSeats" class="form-control br-input" id="numOfSeats"
+                    placeholder="Number of Seats" required>
+                </div>
+              </div>
+              <div class="text-center" style="margin-bottom: 10px;"><label class="label" id="Vlabel" style="color: white;">...</label></div>
+              <div class="text-center"><button type="submit" onclick="add_vehicle()">Submit</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mt-5 mt-lg-0" style="text-align: center;">
+          <a class="addButton" onclick="remVcollapse()" data-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="collapseExample">
+            Remove a vehicle from DB <span><img src="assets/img/minus.png" width="25" height="25"></span>
+          </a>
+          <div class="collapse card-body"  id ="collapseExample3" style="margin-top:13px;">
+          <div class = "col-lg-12 mt-5 mt-lg-0"><select class="form-control br-input" id="remVehicleList">
+            <option selected>Select Vehicle...</option></select></div>
+            <div class="text-center" style="margin-bottom: 10px;"><label class="label" id="Vlabel" style="color: white;">...</label></div>
+              <div class="text-center"><button type="submit" onclick="rem_vehicle()">Submit</button></div>
+            </div>
+        </div> 
+        </div>
+        <div class="section-title">
+          <h2>Vehicles Database</h2>
+        </div>
+        <div style=" overflow: auto; max-height: 300px; max-width: fit-content;">
+        <table id="vehiclesDB" cellpadding="10" style="border-collapse:collapse;">
+          <thead>
+            <th>ID</th>
+            <th>Registration Number</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Class</th>
+            <th>Number of seats</th>
+            <th>Availablity</th>
+          </thead>
+        </table>
+      </div>
+      </div>
+    </section>
+
+    <!--Drivers Section-->
+
+    <section id="drivers" class="about">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <p>Drivers</p>
+        </div>
+        <div class="row">
+        <div class="col-lg-6 mt-5 mt-lg-0" style="text-align: center;">
+          <a class="addButton" onclick="dcollapse()" data-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="collapseExample1">
+            Add driver to DB <span><img src="assets/img/plus icon.png" width="40" height="40"></span>
+          </a>
+
+          <div class="collapse card-body" id="collapseExample1">
+            <div class="col-lg-12 mt-5 mt-lg-0">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="Dname" class="form-control br-input" id="Dname" placeholder="Driver Name" required>
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                  <input type="number" name="Dphn" class="form-control br-input" id="Dphn" placeholder="Driver Phone Number"
+                    required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="number" name="age" class="form-control br-input" id="age" placeholder="Age" required>
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                  <input type="number" name="exp" class="form-control br-input" id="exp" placeholder="Experience(in years)"
+                    required>
+                </div>
+              </div>
+              <div class="text-center" style="margin-bottom: 10px;"><label class="label" id="Dlabel" style="color: white;">...</label></div>
+              <div class="text-center"><button type="submit" onclick="add_driver()">Submit</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mt-5 mt-lg-0" style="text-align: center;">
+          <a class="addButton" onclick="remDcollapse()" data-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="collapseExample">
+            Remove a driver from DB <span><img src="assets/img/minus.png" width="25" height="25"></span>
+          </a>
+          <div class="collapse card-body"  id ="collapseExample4" style="margin-top:13px;">
+          <div class = "col-lg-12 mt-5 mt-lg-0"><select class="form-control br-input" id="remDriverList">
+            <option selected>Select Driver...</option></select></div>
+            <div class="text-center" style="margin-bottom: 10px;"><label class="label" id="Vlabel" style="color: white;">...</label></div>
+              <div class="text-center"><button type="submit" onclick="rem_driver()">Submit</button></div>
+            </div>
+        </div> 
+      </div>
+
+        <div class="section-title">
+          <h2>Drivers Database</h2>
+        </div>
+        <div style=" overflow: auto; max-height: 300px; max-width: fit-content;">
+        <table id="driversDB" cellpadding="10" style="border-collapse:collapse;">
+          <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Age</th>
+            <th>Experience</th>
+            <th>Availablity</th>
+          </thead>
+        </table>
+        </div>
+      </div>
+    </section>
+
+    <!--Statistics Section-->
+
+    <section id="stats" class="about">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <p>Statistics</p>
+        </div>
+        <div class="tabset">
+          <!-- Tab 1 -->
+          <input type="radio" name="tabset" id="tab1" aria-controls="marzen" checked>
+          <label for="tab1">General</label>
+          <!-- Tab 2 -->
+          <input type="radio" name="tabset" id="tab2" aria-controls="rauchbier">
+          <label for="tab2">Vehicles</label>
+          <!-- Tab 3 -->
+          <input type="radio" name="tabset" id="tab3" aria-controls="dunkles">
+          <label for="tab3">Drivers</label>
+
+          <div class="tab-panels">
+            <section id="marzen" class="tab-panel">
+              <div class="row" id="chart-row">
+                <div class="col-lg-5">
+                  <div class="card">
+                    <div class="card-body chart-card">
+                      <canvas id="chDonut1"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-7">
+                  <div class="card">
+                    <div class="card-body chart-card">
+                      <canvas id="chLine1"></canvas>
+                      <h6>Booking ID</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section id="rauchbier" class="tab-panel">
+              <div class="row">
+                <div class = "col-lg-5">
+              <div class="card">
+                <div class="card-body chart-card">
+                  <canvas id="chDonut2"></canvas>
+                </div>
+                </div>
+              </div>
+              <div class = "col-lg-5">
+                <div class="card">
+                  <div class="card-body chart-card">
+                    <canvas id="chDonut3"></canvas>
+                  </div>
+                  </div>
+                </div>
+            </div>
+            <div class ="row">
+              <div class="col-lg-10">
+                <div class="card">
+                  <div class="card-body chart-card">
+                    <canvas id="chLine2"></canvas>
+                  </div>
+                  </div>
+              </div>
+            </div>
+            </section>
+            <section id="dunkles" class="tab-panel">
+              <div class="row">
+                <div class = "col-lg-5">
+              <div class="card">
+                <div class="card-body chart-card">
+                  <canvas id="chDonut4"></canvas>
+                </div>
+                </div>
+              </div>
+              
+            </div>
+            <div class="row">
+              <div class = "col-lg-10">
+            <div class="card">
+              <div class="card-body chart-card">
+                <canvas id="chLine3"></canvas>
+              </div>
+              </div>
+            </div>
+            
+          </div>
+            </section>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+
+    
+
+    <!--<div id='map'></div>-->
+
+
+    <div>
+      <div id="preloader"></div>
+      <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+          class="bi bi-arrow-up-short"></i></a>
+    </div>
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/purecounter/purecounter.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+
+</body>
+
+</html>
