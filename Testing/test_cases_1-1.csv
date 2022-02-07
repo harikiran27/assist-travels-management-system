@@ -1,0 +1,5 @@
+email,password,value,description
+hey,qwerty123,FALSE,Incorrect email address
+harikiran.2136@gmail.com,qwerty,FALSE,Invalid password
+hey@gmail.com,qwerty123,FALSE,Email not found
+harikiran.2136@gmail.com,qwerty123,TRUE,Passing

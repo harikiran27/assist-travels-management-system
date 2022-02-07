@@ -1,5 +1,10 @@
+'''
+For checking time errors, set date to today's date and time to sometime which is past in the day
+'''
+
 from asyncio.windows_events import NULL
 from datetime import date
+from pydoc import cli
 from random import random
 import requests
 import geocoder
@@ -10,8 +15,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import TimeoutException
-from PIL import Image
+from selenium.webdriver.common.alert import Alert
 
+from PIL import Image
+import time
 
 test_cases = open("Testing/test_cases_2.csv", "r")
 '''for x in f:
@@ -57,6 +64,8 @@ dest_box = driver.find_element(By.XPATH,'//*[@id="destGeocoder"]/div/input')
 
 submit_button = driver.find_element(By.ID,"submit_ride_button")
 
+start_len = dest_len = 0
+
 
 
 def clearAll():
@@ -70,19 +79,53 @@ def clearAll():
     tripType_box.send_keys('Select')
     
     start_box.send_keys('   ')
+
+    start_len = len(start_box.get_attribute("value"))
+    dest_len = len(dest_box.get_attribute("value"))
+
     action.move_to_element(start_box)
     action.perform()
+    '''while start_len>=-5:
+        start_len-=1
+        start_box.send_keys(Keys.BACKSPACE)
+'''
     #WebDriverWait(driver,timeout1).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="geocoder"]/div/div[2]/button')))
-    WebDriverWait(driver,timeout1).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="geocoder"]/div/div[2]/button')))
-    driver.find_element(By.XPATH, '//*[@id="geocoder"]/div/div[2]/button').click()
+    WebDriverWait(driver,20).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="geocoder"]/div/div[2]/button')))
+    
+    clicked = False
+    while clicked==False:
+        try:
+            driver.find_element(By.XPATH, '//*[@id="geocoder"]/div/div[2]/button').click()
+            clicked=True
+        except:
+            print("Sleeping for 5s")
+            time.sleep(5)
+            print("Slept for 5s")
+    
     
     dest_box.send_keys('   ')
     action.move_to_element(dest_box)
     action.perform()
     #WebDriverWait(driver,timeout1).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="destGeocoder"]/div/div[2]/button')))
-    WebDriverWait(driver,timeout1).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="destGeocoder"]/div/div[2]/button')))
-    driver.find_element(By.XPATH, '//*[@id="destGeocoder"]/div/div[2]/button')
+    WebDriverWait(driver,20).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="destGeocoder"]/div/div[2]/button')))
 
+    clicked=False
+    while clicked==False:
+        try:
+            driver.find_element(By.XPATH, '//*[@id="destGeocoder"]/div/div[2]/button').click()
+            clicked=True
+        except:
+            print("Sleeping for 5s")
+            time.sleep(5)
+            print("Slept for 5s")
+ 
+    
+    '''
+    while dest_len>=-5:
+        dest_len-=1
+        dest_box.send_keys(Keys.BACKSPACE)
+    '''
+'''
 def reachable(start,dest):
     s=geocoder.mapbox(start,key=mapboxAccessToken)
     d=geocoder.mapbox(dest,key=mapboxAccessToken)
@@ -93,7 +136,7 @@ def reachable(start,dest):
         print('null')
         return False
     return True
-
+'''
 
 
 
@@ -122,10 +165,12 @@ def book_a_ride_test(name,phn,date,days,vClass,time,num,type,start,dest,flag):
 
     start_box.send_keys(start)
     WebDriverWait(driver,10).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="geocoder"]/div/div[1]/ul')))
+    
     start_box.send_keys(Keys.RETURN)
 
     dest_box.send_keys(dest)
     WebDriverWait(driver,10).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="destGeocoder"]/div/div[1]/ul')))
+   
     dest_box.send_keys(Keys.RETURN)
 
     WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.ID,"submit_ride_button")))
@@ -137,7 +182,7 @@ def book_a_ride_test(name,phn,date,days,vClass,time,num,type,start,dest,flag):
     #print('2')
     try:
         #WebDriverWait(driver,10).until(EC.presenceOfElementLocated(By.XPATH("//*[@id='error-label'][contains(@style, 'color: red')]")))
-        WebDriverWait(driver,10).until(EC.visibility_of_element_located((By.ID, 'error-label')))
+        WebDriverWait(driver,5).until(EC.visibility_of_element_located((By.ID, 'error-label')))
         print(error_label.text)
         #clearAll()
         return accepted
@@ -146,8 +191,10 @@ def book_a_ride_test(name,phn,date,days,vClass,time,num,type,start,dest,flag):
         
 
     try:
+        submit_button.click()
         WebDriverWait(driver,10).until(EC.alert_is_present())
-        alert = driver.switch_to.alert
+        alert = Alert(driver)
+        print(alert.text)
         alert.accept()
         print("Booking successful - Alert accepted")
         accepted = True
@@ -159,29 +206,31 @@ def book_a_ride_test(name,phn,date,days,vClass,time,num,type,start,dest,flag):
     
 
 #accepted :
-book_a_ride_test('Bot','1234567890','10-02-2022','5','Sedan','11:11PM','4','Pick',locations[0],locations[9],1)
+#book_a_ride_test('Bot','1234567890','10-02-2022','5','Sedan','11:11PM','4','Pick',locations[0],locations[9],1)
 
 
 
 
-# flag = -1
-# for line in test_cases:
-#     flag+=1
-#     if flag == 0:
-#         continue
-#     test = line.split(',')
-#     print('Test case '+str(flag)+' For input : ', test)
-#     val = book_a_ride_test(test[0],test[1],test[2],test[3],test[4],test[5],test[6],test[7],test[8],test[9],flag)
-#     #print(val)
+flag = -1
+for line in test_cases:
+    flag+=1
+    print(flag)
+    if flag == 0:
+        continue
+    #if flag==1  or flag==9:
+    test = line.split(',')
+    print('Test case '+str(flag)+' For input : ', test)
+    val = book_a_ride_test(test[0],test[1],test[2],test[3],test[4],test[5],test[6],test[7],test[8],test[9],flag)
+    #print(val)
     
 
-#     if(test[10].strip() == 'TRUE'): x=True
-#     else: x=False
+    if(test[10].strip() == 'TRUE'): x=True
+    else: x=False
 
-#     if val == x :
-#         print('Test Case Passed')
-#     else: print('Test Case Failed')
-#     driver.save_screenshot('Testing/Screenshots/'+str(flag)+'.png')
-#     clearAll()
+    if val == x :
+        print('Test Case Passed')
+    else: print('Test Case Failed')
+    driver.save_screenshot('Testing/test2/Screenshots/'+str(flag)+'.png')
+    clearAll()
 
-# driver.quit()
+driver.quit()

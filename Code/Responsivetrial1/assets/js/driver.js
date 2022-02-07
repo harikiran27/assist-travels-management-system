@@ -96,11 +96,11 @@ var firebaseConfig = {
             alert("You are not registered as a driver. Please contact the admin.")
         }
         snap.docs.forEach( docu => {
-            db.collection("bookings").where("status","==","ongoing").where("asssignedDriverID","==",docu.data().id).onSnapshot((snapshot) => {
-                if(snapshot.size==0){
+            db.collection("bookings").onSnapshot((snapshot) => {
+                /*if(snapshot.size==0){
                     alert("You don't have any ride currently assigned.");
-                    window.open('Code\Responsivetrial1\driverPage.html')
-                }
+                    window.open('Code/Responsivetrial1/driverPage.html')
+                }*/
                 if(flag==1)
                   alert("Booking details received.");
                   flag++;

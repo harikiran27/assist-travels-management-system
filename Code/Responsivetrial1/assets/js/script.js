@@ -99,7 +99,7 @@
     .then((userCredential) => {
       // Signed in
       var user = userCredential.user;
-      window.location.href = 'file:///C:/Users/hgrya/Documents/SE%20Project/Code/Responsivetrial1/index.html';
+      window.location.href = 'index.html';
       // ...
     })
     .catch((error) => {

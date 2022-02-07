@@ -366,13 +366,13 @@ var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(
 var dateTime = date + ' ' + time;
 
 function clickBookRide(){
-  document.getElementById('loadCheck').style="display:block;"
+  document.getElementById('loadCheck').style="display:block;color: white;"
 }
 
 console.log(dateTime);
 
 var push_to_firebase = function (data, section, docName) {
-  alert("Request received.")
+  confirm("Request received.")
 
 
   if (section == 1) {
@@ -492,7 +492,7 @@ var booking_submit = function () {
     {
       document.getElementById("error-label").style.display = "none";
       console.log('no errors!')
-      return
+
       push_to_firebase(booking_data, 1, null);
       assignRideAuto(x, vehicleType.value, num.value);
     })
@@ -741,6 +741,12 @@ function renderRemoveDriver(){
 
 function rem_vehicle(){
   var vName = document.getElementById('remVehicleList').value;
+  document.getElementById('remVlabel').style="color:white";
+  if(vName=="Select Vehicle..."){
+    document.getElementById('remVlabel').style="color:red";
+    document.getElementById('remVlabel').innerHTML="No vehicle selected!"
+    return
+  }
   var vArray = vName.split(' ');
   var vMake = vArray[0];
   var vModel = vArray[1];
@@ -749,6 +755,8 @@ function rem_vehicle(){
     snapshot.docs.forEach(doc => {
       if(doc.data().available==false){
         alert("Looks like the vehicle is currently in a ride!")
+        document.getElementById('remVlabel').style="color:red";
+        document.getElementById('remVlabel').innerHTML="The vehicle is currently in a ride"
         return;
       }
       doc.ref.delete();
@@ -760,12 +768,20 @@ function rem_vehicle(){
 
 function rem_driver(){
   var dName = document.getElementById('remDriverList').value;
+  document.getElementById('remDlabel').style="color:white";
+  if(dName=="Select Driver..."){
+    document.getElementById('remDlabel').style="color:red";
+    document.getElementById('remDlabel').innerHTML="No driver selected!"
+    return
+  }
   
-  console.log(vMake,vModel)
+  console.log(dName)
   db.collection("drivers").where("name","==",dName).get().then((snapshot)=>{
     snapshot.docs.forEach(doc => {
       if(doc.data().available==false){
         alert("Looks like the driver is currently in a ride!")
+        document.getElementById('remDlabel').style="color:red";
+        document.getElementById('remDlabel').innerHTML="The driver is currently in a ride"
         return;
       }
       doc.ref.delete();
@@ -1299,10 +1315,6 @@ async function reachable(start,end){
 
 async function checkforErrors(booking_data){
 
-  
-
-
-  console.log(booking_data['date'])
   var dd = parseInt(booking_data['date'][8] + booking_data['date'][9])
   var mm = parseInt(booking_data['date'][5]+booking_data['date'][6])
   var yy = parseInt(booking_data['date'][0]+booking_data['date'][1]+booking_data['date'][2]+booking_data['date'][3])
@@ -1339,8 +1351,8 @@ async function checkforErrors(booking_data){
     document.getElementById("error-label").style.display="block";  
     console.log('error')
       return true;
+    }
   }
-}
   if(booking_data['phn']<1000000000 || booking_data['phn']>9999999999){
     document.getElementById("error-label").innerHTML="Please enter a valid phone number";
     document.getElementById("error-label").style.display="block";
