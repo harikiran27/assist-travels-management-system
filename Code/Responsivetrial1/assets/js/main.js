@@ -360,6 +360,13 @@ var datetime = currentdate.getDate() + "/"
 
 */
 
+const auth =  firebase.auth();
+function signOut(){
+  auth.signOut();
+  alert("Signed Out Successfully from the System");
+  window.location.href = 'login.html';
+}
+
 var today = new Date();
 var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -1370,6 +1377,7 @@ async function checkforErrors(booking_data){
   }
   else if(yy==cy && mm ==cm && (dd<cd)){
     document.getElementById("error-label").innerHTML="Please enter a valid day.";
+    document.getElementById("error-label").style.display="block";
       return true;
   }
   else if(booking_data['days']<=0){

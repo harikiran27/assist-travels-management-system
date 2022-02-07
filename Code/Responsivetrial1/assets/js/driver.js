@@ -87,6 +87,7 @@ var firebaseConfig = {
     var driverPhn = dp.slice(3,dp.length);
     console.log(dp,driverPhn)
     var flag = 0;
+    var booking_found = false;
 
     //  console.log(driverID.value);
   //.where("status","==","ongoing").where("assignedDriverID","==",driverID.value)
@@ -101,14 +102,25 @@ var firebaseConfig = {
                     alert("You don't have any ride currently assigned.");
                     window.open('Code/Responsivetrial1/driverPage.html')
                 }*/
-                if(flag==1)
-                  alert("Booking details received.");
-                  flag++;
-                console.log(snapshot.size)
+                
                 snapshot.docs.forEach(doc => {
+                    flag++;
                     if(doc.data().status=="ongoing" && doc.data().assignedDriverID==docu.data().id){
+                    alert("Booking details received.");
                       renderBookingDetailsList(doc);
+                      booking_found = true;
+                      return
                     }
+                    if(flag==snapshot.size && booking_found==false){
+                        alert("You don't have any ride currently assigned.");
+                        window.open('driverPage.html')
+                        return
+                    }
+                /*if(flag==1)
+                  alert("Booking details received.");*/
+                  
+                console.log(snapshot.size)
+                
                     //else console.log("No booking yet")
               })
             })

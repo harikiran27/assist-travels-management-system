@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.alert import Alert
 
 
 driver_path = "Testing/chromedriver.exe"
@@ -17,7 +18,7 @@ driver = webdriver.Chrome(executable_path=driver_path, chrome_options=option)
 
 driver.get('file:///C:/Users/hgrya/Documents/SE%20Project/Code/Responsivetrial1/login.html')
 print(driver.title)
-driver.implicitly_wait(5)
+driver.implicitly_wait(10)
 
 test_cases_1 = open("Testing/test_cases_1-1.csv", "r")
 
@@ -76,18 +77,84 @@ signIn_test("harikiran.2136@gmail.com","admin123") #passing
 
 '''
 
+print('\nTest case 0 Check for title and signin tab active')
+if driver.title == 'Login System' and driver.find_element_by_id("tab-1").is_selected():
+    print('Test Case passed')
+else:
+    print('Test case failed')
+
+try:
+    print('\nTest case 5 Check for clicking Forgot Password')
+    driver.find_element_by_id('forgot_password').click()
+    WebDriverWait(driver, 3).until(EC.alert_is_present(),
+                                   'Timed out waiting for PA creation ' +
+                                   'confirmation popup to appear.')
+    
+    obj = driver.switch_to.alert
+    obj.send_keys('hey')
+    obj.accept()
+    
+    if obj.text == "Confirm or deny":
+        print('...')
+        obj.accept()
+        WebDriverWait(driver, 3).until(EC.alert_is_present(),
+                                   'Timed out waiting for PA creation ' +
+                                   'confirmation popup to appear.')
+        obj = driver.switch_to.alert                             
+        if obj.text == "Entered email is invalid":
+            print('Test case passed')
+        else:
+            print('Test case failed in step1')
+        obj.accept()
+    else:
+        print('Test case failed in step2')
+   
+    print("alert accepted")
+except TimeoutException:
+    print("no alert")
+
+try:
+    print('\nTest case 6 Check for clicking Forgot Password')
+    driver.find_element_by_id('forgot_password').click()
+    WebDriverWait(driver, 3).until(EC.alert_is_present(),
+                                   'Timed out waiting for PA creation ' +
+                                   'confirmation popup to appear.')
+    
+    obj = driver.switch_to.alert
+    obj.send_keys('bot175@gmail.com')
+    obj.accept()
+    
+    if obj.text == "Confirm or deny":
+        print('...')
+        obj.accept()
+        WebDriverWait(driver, 3).until(EC.alert_is_present(),
+                                   'Timed out waiting for PA creation ' +
+                                   'confirmation popup to appear.')
+        obj = driver.switch_to.alert                             
+        if obj.text == "Password reset email sent!":
+            print('Test case passed')
+        else:
+            print('Test case failed in step1')
+        obj.accept()
+    else:
+        print('Test case failed in step2')
+   
+    print("alert accepted")
+except TimeoutException:
+    print("no alert")
+
 
 
 #For signin
 flag = -1
 for line in test_cases_1:
     flag+=1
-    print(flag)
+    #print(flag)
     if flag == 0:
         continue
     #if flag==1  or flag==9:
     test = line.split(',')
-    print('Test case '+str(flag)+' For input : ', test)
+    print('\nTest case '+str(flag)+' For input : ', test)
     val = signIn_test(test[0],test[1])
     #print(val)
     
@@ -100,7 +167,7 @@ for line in test_cases_1:
     else: print('Test Case Failed')
     driver.save_screenshot('Testing/test1/Screenshots/signin'+str(flag)+'.png')
     
-
+driver.quit()
 
 
 

@@ -18,9 +18,16 @@
     var email = document.getElementById("email");
     var password = document.getElementById("password");
     var phone = document.getElementById("phnumber");
+    var name = document.getElementById("name");
     document.getElementById("error-label").style.display="none";
     document.getElementById("error-label").style.color="red";
     document.getElementById("error-label").style.textAlign="center";
+
+    if(email.value==''||password.value==''||phone.value==''||name.value==''||email.value==null||password.value==null||phone.value==null||name.value==null){
+      document.getElementById("error-label").innerHTML="Enter all details";
+      document.getElementById("error-label").style.display="block";
+      return;
+    }
 
     if(phone.value<=1000000000 || phone.value>=9999999999){
       document.getElementById("error-label").innerHTML="Enter a valid phone number!";
@@ -78,6 +85,7 @@
       alert('Password reset email sent!');
     })
     .catch((error) => {
+      alert('Entered email is invalid')
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode,errorMessage)
@@ -94,6 +102,11 @@
     document.getElementById("error-label1").style.color="red";
     document.getElementById("error-label1").style.textAlign="center";
     
+    if(email.value==''||password.value==''||email.value==null||password.value==null){
+      document.getElementById("error-label1").innerHTML="Enter all details";
+      document.getElementById("error-label1").style.display="block";
+      return;
+    }
 
     const promise = auth.signInWithEmailAndPassword(email.value,password.value)
     .then((userCredential) => {

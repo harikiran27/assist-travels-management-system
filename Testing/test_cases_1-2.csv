@@ -1,4 +1,5 @@
 email,password,name,phone,value,description
+,,,,FALSE,No details entered
 hey,hey,hey,123,FALSE,Invalid phone number
 hey,hey,hey,9988776655,FALSE,Invalid email
 harikiran.2136@gmail.com,hey123,hey,9988776655,FALSE,Email already exists

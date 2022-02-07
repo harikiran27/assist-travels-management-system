@@ -153,6 +153,21 @@ def book_a_ride_test(name,phn,date,days,vClass,time,num,type,start,dest,flag):
 
     #print('1')
     
+    if(name=='' or phn=='' or date=='' or days=='' or vClass=='' or time=='' or num=='' or type=='' or start=='' or dest==''):
+        WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.ID,"submit_ride_button")))
+        #print('clickable')
+        submit_button = driver.find_element(By.ID,'submit_ride_button')
+        submit_button.click()
+        try:
+            #WebDriverWait(driver,10).until(EC.presenceOfElementLocated(By.XPATH("//*[@id='error-label'][contains(@style, 'color: red')]")))
+            WebDriverWait(driver,5).until(EC.visibility_of_element_located((By.ID, 'error-label')))
+            print(error_label.text)
+            #clearAll()
+            return accepted
+        except:
+            print('....')
+    
+
     name_box.send_keys(name)
     phn_box.send_keys(phn)
     date_box.send_keys(date)
@@ -209,6 +224,12 @@ def book_a_ride_test(name,phn,date,days,vClass,time,num,type,start,dest,flag):
 #book_a_ride_test('Bot','1234567890','10-02-2022','5','Sedan','11:11PM','4','Pick',locations[0],locations[9],1)
 
 
+print('\nTest case 0 Check for title and signin tab active')
+if driver.title == 'Assist - Index':
+    print('Test Case passed')
+else:
+    print('Test case failed')
+
 
 
 flag = -1
@@ -217,9 +238,10 @@ for line in test_cases:
     print(flag)
     if flag == 0:
         continue
+
     #if flag==1  or flag==9:
     test = line.split(',')
-    print('Test case '+str(flag)+' For input : ', test)
+    print('\nTest case '+str(flag)+' For input : ', test)
     val = book_a_ride_test(test[0],test[1],test[2],test[3],test[4],test[5],test[6],test[7],test[8],test[9],flag)
     #print(val)
     
@@ -231,6 +253,7 @@ for line in test_cases:
         print('Test Case Passed')
     else: print('Test Case Failed')
     driver.save_screenshot('Testing/test2/Screenshots/'+str(flag)+'.png')
-    clearAll()
+    if flag!=1:
+        clearAll()
 
 driver.quit()

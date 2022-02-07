@@ -1,6 +1,10 @@
 ﻿name,phn,date,days,vehicleClass,time,numOfPpl,tripType,start,dest,value,description
+,,,,,,,,,,FALSE,Enter all details
 Bot,123,07-02-2022,5,Sedan,11:11PM,4,Pick,Bangalore,Mysore,FALSE,Incorrect phone number
-Bot,1234567890,3999-01-299,5,Sedan,11:11PM,4,Pick,Bangalore,Mysore,FALSE,Incorrect date
+Bot,1234567890,07-02-2021,5,Sedan,11:11PM,4,Pick,Bangalore,Mysore,FALSE,Incorrect year
+Bot,1234567890,07-01-2022,5,Sedan,11:11PM,4,Pick,Bangalore,Mysore,FALSE,Incorrect month
+Bot,1234567890,01-02-2022,5,Sedan,11:11PM,4,Pick,Bangalore,Mysore,FALSE,Incorrect date
+Bot,1234567890,3999-01-299,5,Sedan,11:11PM,4,Pick,Bangalore,Mysore,FALSE,Invalid date
 Bot,1234567890,07-02-2022,-1,Sedan,11:11PM,4,Pick,Bangalore,Mysore,FALSE,Incorrect num of days
 Bot,1234567890,07-02-2022,5,XYZ,11:11PM,4,Pick,Bangalore,Mysore,FALSE,Incorrect vehicleClass
 Bot,1234567890,07-02-2022,5,Sedan,12:01AM,4,Pick,Bangalore,Mysore,FALSE,Incorrect time

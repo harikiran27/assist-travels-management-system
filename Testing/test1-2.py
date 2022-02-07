@@ -7,6 +7,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.alert import Alert
+
 
 
 driver_path = "Testing/chromedriver.exe"
@@ -22,7 +24,6 @@ driver.get('file:///C:/Users/hgrya/Documents/SE%20Project/Code/Responsivetrial1/
 print(driver.title)
 driver.implicitly_wait(10)
 
-
 test_cases_2 = open("Testing/test_cases_1-2.csv", "r")
 
 
@@ -37,6 +38,7 @@ SU_submit_button = driver.find_element(By.ID,'submit')
 timeout = 2
 timeout1 = 5 #for elements that take more time loading
 
+WebDriverWait(driver,timeout1).until(EC.visibility_of_element_located((By.XPATH, '/html/body/div/div/div/div[2]/div[8]/label')))
 
 def clearSU():
     SU_email_addr_box.clear()
@@ -58,14 +60,15 @@ def signUP_test(email,password,name,phn):
     SU_submit_button.click()
 
     try:
-        WebDriverWait(driver,timeout).until(EC.alert_is_present())
-        alert = driver.switch_to.alert
-        alert.accept() 
+        WebDriverWait(driver,timeout1).until(EC.alert_is_present())
+        alert = Alert(driver)
+        print(alert.text)
+        alert.accept()
         print("SignUp successful - Alert accepted")
         accepted = True
         return accepted
     except:
-        print('...No Alert Found, Checking for errors...')
+        print('...')
 
     try:
         WebDriverWait(driver,timeout1).until(EC.visibility_of_element_located((By.ID, 'error-label')))
@@ -100,6 +103,13 @@ signUP_test(rand_email,"qwe","hey","9988776655") #invalid password
 signUP_test(rand_email,"qwerty123","MyName","9988776655") #accepted
 '''
 #for signUp
+driver.find_element(By.ID,'SUtab').click()
+print('\nTest case 0 Check for title and signup tab active')
+if driver.title == 'Login System' and driver.find_element_by_id("tab-2").is_selected():
+    print('Test Case passed')
+else:
+    print('Test case failed')
+
 flag = -1
 for line in test_cases_2:
     flag+=1
@@ -107,7 +117,7 @@ for line in test_cases_2:
         continue
     #if flag==1  or flag==9:
     test = line.split(',')
-    print('Test case '+str(flag)+' For input : ', test)
+    print('\nTest case '+str(flag)+' For input : ', test)
     if test[0]!="rand_email":
         val = signUP_test(test[0],test[1],test[2],test[3])
     else:
@@ -124,6 +134,15 @@ for line in test_cases_2:
         print('Test Case Passed')
     else: print('Test Case Failed')
     driver.save_screenshot('Testing/test1/Screenshots/signup'+str(flag)+'.png')
+
+WebDriverWait(driver,timeout1).until(EC.visibility_of_element_located((By.ID, 'SUtab')))
+driver.find_element_by_id('SUtab').click()
+print('\nTest case 7 Click on Already Member')
+driver.find_element_by_id('already_member').click()
+if driver.title == 'Login System' and driver.find_element_by_id("tab-1").is_selected():
+    print('Test case passed')
+else:
+    print('Test case failed')
 
 driver.quit()
 
