@@ -5,4 +5,4 @@ The system contains a set of drivers and cars and Assist will help to simplify b
 
 There is also a driver side web application which will fetch any booking assigned to the driver, who will login with an OTP to his mobile number. On ride confirmation, the application will show a route map which is working using MapBox API.
 
-Assist also a statistics page to analyse the earnings from each vehicle or driver.
+Assist also has a statistics page to analyse the earnings from each vehicle or driver.
